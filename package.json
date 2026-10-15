@@ -40,7 +40,8 @@
     "android:clean": "node -e \"const fs=require('fs');['android/app/.cxx','android/app/build','android/build'].forEach(p=>fs.rmSync(p,{recursive:true,force:true}))\" && cd android && ./gradlew clean && cd ..",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "capture": "bun ./script/Capture/Capture.ts"
   },
   "private": true
 }
