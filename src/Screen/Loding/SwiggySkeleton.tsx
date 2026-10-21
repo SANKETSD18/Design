@@ -1,7 +1,8 @@
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { LayoutChangeEvent, ScrollView, StyleSheet, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Image, LayoutChangeEvent, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Animated, {
     Easing,
     interpolate,
@@ -11,7 +12,14 @@ import Animated, {
     withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { s, vs } from '../../Util/Scale';
+import SwiggyAssets from '../../assets/swiggy';
+import { ms, s, vs } from '../../Util/Scale';
+
+const TABS = [
+    { id: '1', title: 'Food', icon: 'fast-food-outline' },
+    { id: '2', title: 'Instamart', icon: 'basket-outline' },
+    { id: '3', title: 'Dineout', icon: 'restaurant-outline' },
+] as const;
 
 const AnimatedGradient = Animated.createAnimatedComponent(LinearGradient);
 
@@ -108,12 +116,37 @@ export const SwiggySkeleton = () => {
                 colors={['#021204', '#0A3214']}
                 style={{ paddingTop: insets.top + vs(10), paddingBottom: vs(16) }}
             >
-                {/* Tabs shimmer */}
-                <View style={skeletonStyles.tabsRow}>
-                    <ShimmerBox width={s(85)} height={vs(46)} borderRadius={s(12)} isDark />
-                    <ShimmerBox width={s(85)} height={vs(46)} borderRadius={s(12)} isDark />
-                    <ShimmerBox width={s(85)} height={vs(46)} borderRadius={s(12)} isDark />
+                {/* 1. Tabs with SwiggyAssets.activeTab and Shimmer Overlay */}
+                <View style={skeletonStyles.tabContainer}>
+                    {TABS.map((tab, index) => {
+                        const isActive = index === 0; // First tab active by default
+                        return (
+                            <View key={tab.id} style={skeletonStyles.tabItem}>
+                                {/* Shimmer placeholder for Tab Icon */}
+                                <ShimmerBox width={s(20)} height={s(20)} borderRadius={s(10)} isDark />
+
+                                {/* Shimmer placeholder for Tab Title */}
+                                <ShimmerBox width={s(48)} height={vs(12)} borderRadius={s(4)} isDark style={{ marginTop: vs(8) }} />
+
+                                {/* SwiggyAssets.activeTab Image remains intact */}
+                                <Image
+                                    source={SwiggyAssets.activeTab}
+                                    style={[
+                                        skeletonStyles.activeOverlay,
+                                        {
+                                            opacity: isActive ? 1 : 0.5,
+                                            borderBottomWidth: 1,
+                                            width: isActive ? s(135) : s(120),
+                                        },
+                                    ]}
+                                    pointerEvents="none"
+                                    resizeMode="contain"
+                                />
+                            </View>
+                        );
+                    })}
                 </View>
+                <View style={skeletonStyles.separator} />
 
                 {/* Address Bar shimmer */}
                 <View style={skeletonStyles.addressRow}>
@@ -182,10 +215,36 @@ const skeletonStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F8F9FA',
     },
-    tabsRow: {
+    tabContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        paddingHorizontal: s(16),
+        alignItems: 'flex-end',
+    },
+    tabItem: {
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingTop: vs(15),
+        minWidth: s(90),
+        borderRadius: s(10),
+        position: 'relative',
+    },
+    tabText: {
+        fontSize: ms(16),
+        fontWeight: 'bold',
+        marginTop: vs(8),
+    },
+    activeOverlay: {
+        position: 'absolute',
+        width: s(120),
+        height: s(65),
+        top: vs(1),
+        zIndex: 10,
+    },
+    separator: {
+        height: 1,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        marginHorizontal: s(16),
+        marginTop: vs(8),
     },
     addressRow: {
         paddingHorizontal: s(16),
