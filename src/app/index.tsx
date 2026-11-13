@@ -20,6 +20,12 @@ export default function Index() {
       >
         <Text style={styles.buttonText}>PIP</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: '#7A5AF8' }]}
+        onPress={() => router.push('/onboarding')}
+      >
+        <Text style={styles.buttonText}>Onboarding</Text>
+      </TouchableOpacity>
     </View>
   );
 }
