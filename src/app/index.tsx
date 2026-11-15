@@ -26,6 +26,12 @@ export default function Index() {
       >
         <Text style={styles.buttonText}>Onboarding</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: '#740707' }]}
+        onPress={() => router.push('/christmas')}
+      >
+        <Text style={styles.buttonText}>Christmas</Text>
+      </TouchableOpacity>
     </View>
   );
 }
