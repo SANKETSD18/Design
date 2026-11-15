@@ -151,7 +151,6 @@ const styles = StyleSheet.create({
         right: 0,
         width: '100%',
         zIndex: 100,
-        elevation: 10,
     },
     textLottieContainer: {
         width: '100%',
