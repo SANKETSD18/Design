@@ -9,6 +9,10 @@ export const ChristmasAssets = {
     merryChristmasWhite: require('./merry_christmas_white_trimmed.png'),
     snowCorner: require('./snow_corner.webp'),
     snowTop: require('./snow_top.webp'),
+    boxCookies: require('./Box/3.png'),
+    boxCoffee: require('./Box/2.png'),
+    boxGift: require('./Box/1.png'),
+    boxDecoration: require('./Box/4.png'),
   },
 };
 

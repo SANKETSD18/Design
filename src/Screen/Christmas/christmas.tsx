@@ -1,9 +1,9 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import LottieView from 'lottie-react-native';
 import { useEffect, useRef } from 'react';
-import { Animated, Dimensions, Image, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { scale, verticalScale } from '../../Util/Scale';
+import { moderateScale, scale, verticalScale } from '../../Util/Scale';
 import { ChristmasAssets } from '../../assets/christmas';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -99,28 +99,76 @@ export default function ChristmasScreen() {
             <View style={[styles.gridContainer, { paddingBottom: insets.bottom + verticalScale(20) }]}>
                 {/* Row 1 */}
                 <View style={styles.row}>
-                    <View style={styles.box}>
+                    {/* Cookie Box */}
+                    <View style={styles.boxWrapper}>
                         {/* Top-Left Snow Cap */}
                         <Image
                             source={ChristmasAssets.images.snowTop}
                             style={styles.snowTopLeft}
                             resizeMode="contain"
                         />
+                        <View style={styles.box}>
+                            <Image
+                                source={ChristmasAssets.images.boxCookies}
+                                style={styles.boxImage}
+                                resizeMode="cover"
+                            />
+                            <View style={styles.labelOverlay}>
+                                <Text style={styles.labelText}>Gift</Text>
+                            </View>
+                        </View>
                     </View>
-                    <View style={styles.box}>
+
+                    {/* Coffee Box */}
+                    <View style={styles.boxWrapper}>
                         {/* Top-Right Dripping Snow Cap */}
                         <Image
                             source={ChristmasAssets.images.snowCorner}
                             style={styles.snowCorner}
                             resizeMode="contain"
                         />
+                        <View style={styles.box}>
+                            <Image
+                                source={ChristmasAssets.images.boxCoffee}
+                                style={styles.boxImage}
+                                resizeMode="cover"
+                            />
+                            <View style={styles.labelOverlay}>
+                                <Text style={styles.labelText}>Buy Coffee</Text>
+                            </View>
+                        </View>
                     </View>
                 </View>
 
                 {/* Row 2 */}
                 <View style={styles.row}>
-                    <View style={styles.box} />
-                    <View style={styles.box} />
+                    {/* Gift Box */}
+                    <View style={styles.boxWrapper}>
+                        <View style={styles.box}>
+                            <Image
+                                source={ChristmasAssets.images.boxGift}
+                                style={styles.boxImage}
+                                resizeMode="cover"
+                            />
+                            <View style={styles.labelOverlay}>
+                                <Text style={styles.labelText}>Cookie</Text>
+                            </View>
+                        </View>
+                    </View>
+
+                    {/* Decoration Box */}
+                    <View style={styles.boxWrapper}>
+                        <View style={styles.box}>
+                            <Image
+                                source={ChristmasAssets.images.boxDecoration}
+                                style={styles.boxImage}
+                                resizeMode="cover"
+                            />
+                            <View style={styles.labelOverlay}>
+                                <Text style={styles.labelText}>Decoration</Text>
+                            </View>
+                        </View>
+                    </View>
                 </View>
             </View>
         </LinearGradient>
@@ -173,15 +221,42 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: scale(16),
     },
-    box: {
+    boxWrapper: {
         flex: 1,
+        position: 'relative',
+        overflow: 'visible',
+    },
+    box: {
+        width: '100%',
         aspectRatio: 1,
         borderRadius: scale(12),
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, 0.2)',
         position: 'relative',
-        overflow: 'visible',
+        overflow: 'hidden',
+    },
+    boxImage: {
+        width: '100%',
+        height: '100%',
+    },
+    labelOverlay: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.55)',
+        paddingVertical: verticalScale(6),
+        paddingHorizontal: scale(8),
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    labelText: {
+        color: '#FFFFFF',
+        fontSize: moderateScale(13),
+        fontWeight: '600',
+        letterSpacing: 0.3,
+        textAlign: 'center',
     },
     snowCorner: {
         position: 'absolute',
@@ -189,7 +264,7 @@ const styles = StyleSheet.create({
         right: -scale(6),
         width: scale(56),
         height: scale(56),
-        zIndex: 5,
+        zIndex: 10,
     },
     snowTopLeft: {
         position: 'absolute',
@@ -197,6 +272,6 @@ const styles = StyleSheet.create({
         left: scale(2),
         width: scale(100),
         height: verticalScale(120),
-        zIndex: 5,
+        zIndex: 10,
     },
 });
