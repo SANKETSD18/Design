@@ -99,8 +99,22 @@ export default function ChristmasScreen() {
             <View style={[styles.gridContainer, { paddingBottom: insets.bottom + verticalScale(20) }]}>
                 {/* Row 1 */}
                 <View style={styles.row}>
-                    <View style={styles.box} />
-                    <View style={styles.box} />
+                    <View style={styles.box}>
+                        {/* Top-Left Snow Cap */}
+                        <Image
+                            source={ChristmasAssets.images.snowTop}
+                            style={styles.snowTopLeft}
+                            resizeMode="contain"
+                        />
+                    </View>
+                    <View style={styles.box}>
+                        {/* Top-Right Dripping Snow Cap */}
+                        <Image
+                            source={ChristmasAssets.images.snowCorner}
+                            style={styles.snowCorner}
+                            resizeMode="contain"
+                        />
+                    </View>
                 </View>
 
                 {/* Row 2 */}
@@ -167,5 +181,23 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, 0.2)',
+        position: 'relative',
+        overflow: 'visible',
+    },
+    snowCorner: {
+        position: 'absolute',
+        top: -verticalScale(18),
+        right: -scale(6),
+        width: scale(56),
+        height: scale(56),
+        zIndex: 5,
+    },
+    snowTopLeft: {
+        position: 'absolute',
+        top: -verticalScale(55),
+        left: scale(2),
+        width: scale(100),
+        height: verticalScale(120),
+        zIndex: 5,
     },
 });
