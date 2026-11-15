@@ -1,17 +1,21 @@
-import React, { useEffect, useRef } from 'react';
-import { Animated, Dimensions, Image, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import LottieView from 'lottie-react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, Dimensions, Image, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { scale, verticalScale } from '../../Util/Scale';
 import { ChristmasAssets } from '../../assets/christmas';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-// Lottie original aspect ratio is 720:405 (16:9)
+// Lottie native resolution is 720:405 (aspect ratio 16:9)
+// SCREEN_WIDTH width lene par iski natural rendered height exactly ye banti hai:
 const LOTTIE_HEIGHT = (SCREEN_WIDTH * 405) / 720;
-// Trimmed Icicles aspect ratio is 1024:190
+
+// Trimmed Icicles aspect ratio 1024:190
 const ICICLE_HEIGHT = (SCREEN_WIDTH * 190) / 1024;
+// Merry Christmas text Lottie aspect ratio 970:260
+const MERRY_TEXT_HEIGHT = (SCREEN_WIDTH * 260) / 970;
 
 // 204 frames at 30 fps = 6800ms
 const ANIMATION_DURATION = 6800;
@@ -66,17 +70,28 @@ export default function ChristmasScreen() {
                     />
                 </Animated.View>
 
-                {/* Ice / Icicles border placed right below the Lottie with slight overlap */}
+                {/* Ice / Icicles border placed exactly at the bottom of the Lottie */}
                 <Image
                     source={ChristmasAssets.images.icicles}
                     style={[
                         styles.icicles,
                         {
+                            top: insets.top + LOTTIE_HEIGHT - verticalScale(6),
                             height: ICICLE_HEIGHT,
-                            marginTop: -verticalScale(8),
                         },
                     ]}
                     resizeMode="stretch"
+                />
+            </View>
+
+            {/* Merry Christmas Animated Write-On Lottie */}
+            <View style={[styles.textLottieContainer, { marginTop: ICICLE_HEIGHT - verticalScale(14) }]}>
+                <LottieView
+                    source={ChristmasAssets.lottie.merryChristmasDraw}
+                    autoPlay
+                    loop
+                    style={styles.merryTextLottie}
+                    resizeMode="contain"
                 />
             </View>
 
@@ -106,6 +121,8 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         position: 'relative',
+        zIndex: 100,
+        elevation: 10,
     },
     lottieWrapper: {
         width: '100%',
@@ -115,13 +132,27 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     icicles: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
         width: '100%',
-        zIndex: 10,
+        zIndex: 100,
+        elevation: 10,
+    },
+    textLottieContainer: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: scale(16),
+        height: verticalScale(MERRY_TEXT_HEIGHT * 0.75),
+    },
+    merryTextLottie: {
+        width: '100%',
+        height: '100%',
     },
     gridContainer: {
         flex: 1,
-        paddingHorizontal: scale(16),
-        paddingTop: verticalScale(24),
+        paddingHorizontal: scale(36), // Compact centered boxes
         justifyContent: 'center',
         gap: scale(16),
     },
