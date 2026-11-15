@@ -5,8 +5,6 @@ export const ChristmasAssets = {
   },
   images: {
     icicles: require('./icicles_trimmed.png'),
-    iciclesOriginal: require('./icicles.png'),
-    merryChristmasWhite: require('./merry_christmas_white_trimmed.png'),
     snowCorner: require('./snow_corner.webp'),
     snowTop: require('./snow_top.webp'),
     boxCookies: require('./Box/3.png'),
